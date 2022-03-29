@@ -1,6 +1,14 @@
+from audioop import reverse
 from queue import PriorityQueue
 
 from numpy import matrix
+
+
+def printPuzzle(matrix):
+    for i in range(4):
+        for j in range(4):
+            print(matrix[i][j], end=" ")
+        print()
 
 
 def posisiKurang(matrix, bilPertama, bilKedua):
@@ -58,15 +66,37 @@ def ubinSalahPosisi(matrix):
     return count
 
 
+def pindahUbin(matrix, posisiBaris, posisiKolom, arahVertikal, arahHorizontal):
+    temp = matrix[posisiBaris][posisiKolom]
+    matrix[posisiBaris][posisiKolom] = matrix[posisiBaris +
+                                              arahVertikal][posisiKolom + arahHorizontal]
+    matrix[posisiBaris + arahVertikal][posisiKolom + arahHorizontal] = temp
+
+
 def pindahkanSlotKosong(matrix, arah):
-
+    barisSelKosong, kolomSelKosong = posisi(matrix, 16)
     if(arah == 1):  # Up
-        print()
+        if(barisSelKosong != 0):
+            pindahUbin(matrix, barisSelKosong, kolomSelKosong, 1, 0)
+    elif(arah == 2):  # Right
+        if(kolomSelKosong != 3):
+            pindahUbin(matrix, barisSelKosong, kolomSelKosong, 0, 1)
+    elif(arah == 3):  # Down
+        if(barisSelKosong != 3):
+            pindahUbin(matrix, barisSelKosong, kolomSelKosong, -1, 0)
+    elif(arah == 4):  # Left
+        if(kolomSelKosong != 0):
+            pindahUbin(matrix, barisSelKosong, kolomSelKosong, 0, -1)
 
 
-#######################
-#     MAIN            #
-#######################
+def insert(list, prio, matrix):
+    list.append((prio, matrix))
+    list.sort(reverse=True)
+
+
+    #######################
+    #     MAIN            #
+    #######################
 puzzle = [[0 for j in range(4)] for i in range(4)]
 print("Masukkan elemen puzzle: ")
 for i in range(4):
@@ -88,4 +118,12 @@ if(puzzleCanBeSolve(puzzle)):
 else:
     print("Puzzle tidak bisa diselesaikan")
 
-prioQueue = PriorityQueue()
+pindahkanSlotKosong(puzzle, 2)
+printPuzzle(puzzle)
+
+list = []
+insert(list, 4, "ASU")
+insert(list, 5, "KAMBINg")
+insert(list, 1, "ANJING")
+
+print(list[0][1])
