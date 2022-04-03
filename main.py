@@ -5,11 +5,13 @@ from puzzleSolver import *
 puzzle = [[0 for j in range(4)] for i in range(4)]
 fileName = input("\nMasukkan nama file: ")
 file = open(fileName, "r")
+outputFile = open("output.txt", "w")
 
 for i in range(4):
     f = file.readline().split()
     for j in range(4):
         puzzle[i][j] = int(f[j])
+file.close()
 print("Puzzle: ")
 printPuzzle(puzzle)
 print()
