@@ -1,129 +1,74 @@
-from audioop import reverse
-from queue import PriorityQueue
+import time
+from puzzleSolver import *
 
-from numpy import matrix
-
-
-def printPuzzle(matrix):
-    for i in range(4):
-        for j in range(4):
-            print(matrix[i][j], end=" ")
-        print()
-
-
-def posisiKurang(matrix, bilPertama, bilKedua):
-    barisBilPertama, kolomBilPertama = posisi(matrix, bilPertama)
-    barisBilKedua, kolomBilKedua = posisi(matrix, bilKedua)
-    return barisBilPertama*4+kolomBilPertama < barisBilKedua*4+kolomBilKedua
-
-
-def posisi(matrix, x):
-    i = 0
-    while(i < 4):
-        j = 0
-        while(j < 4):
-            if(matrix[i][j] == x):
-                return i, j
-            j += 1
-        i += 1
-
-
-def posisiSelKosong(matrix):
-    i, j = posisi(matrix, 16)
-    if((i+j) % 2 == 0):
-        return 0
-    else:
-        return 1
-
-
-def Kurang(matrix, x):
-    count = 0
-    for i in range(4):
-        for j in range(4):
-            if((matrix[i][j] < x) and posisiKurang(matrix, x, matrix[i][j])):
-                count += 1
-    return count
-
-
-def sigmaKurang(matrix):
-    count = 0
-    for i in range(4):
-        for j in range(4):
-            count += Kurang(matrix, matrix[i][j])
-    return count
-
-
-def puzzleCanBeSolve(matrix):
-    return (posisiSelKosong(matrix) + sigmaKurang(matrix)) % 2 == 0
-
-
-def ubinSalahPosisi(matrix):
-    count = 0
-    for i in range(4):
-        for j in range(4):
-            if(matrix[i][j] != i*4+j+1 and matrix[i][j] != 16):
-                count += 1
-    return count
-
-
-def pindahUbin(matrix, posisiBaris, posisiKolom, arahVertikal, arahHorizontal):
-    temp = matrix[posisiBaris][posisiKolom]
-    matrix[posisiBaris][posisiKolom] = matrix[posisiBaris +
-                                              arahVertikal][posisiKolom + arahHorizontal]
-    matrix[posisiBaris + arahVertikal][posisiKolom + arahHorizontal] = temp
-
-
-def pindahkanSlotKosong(matrix, arah):
-    barisSelKosong, kolomSelKosong = posisi(matrix, 16)
-    if(arah == 1):  # Up
-        if(barisSelKosong != 0):
-            pindahUbin(matrix, barisSelKosong, kolomSelKosong, 1, 0)
-    elif(arah == 2):  # Right
-        if(kolomSelKosong != 3):
-            pindahUbin(matrix, barisSelKosong, kolomSelKosong, 0, 1)
-    elif(arah == 3):  # Down
-        if(barisSelKosong != 3):
-            pindahUbin(matrix, barisSelKosong, kolomSelKosong, -1, 0)
-    elif(arah == 4):  # Left
-        if(kolomSelKosong != 0):
-            pindahUbin(matrix, barisSelKosong, kolomSelKosong, 0, -1)
-
-
-def insert(list, prio, matrix):
-    list.append((prio, matrix))
-    list.sort(reverse=True)
-
-
-    #######################
-    #     MAIN            #
-    #######################
+# Proses inisiasi puzzle
 puzzle = [[0 for j in range(4)] for i in range(4)]
-print("Masukkan elemen puzzle: ")
-for i in range(4):
-    for j in range(4):
-        puzzle[i][j] = int(input("Masukkan elemen ke-" + str(i*4+j) + ": "))
+fileName = input("\nMasukkan nama file: ")
+file = open(fileName, "r")
 
-print()
+for i in range(4):
+    f = file.readline().split()
+    for j in range(4):
+        puzzle[i][j] = int(f[j])
 print("Puzzle: ")
-for i in range(4):
-    for j in range(4):
-        print(puzzle[i][j], end=" ")
-    print()
+printPuzzle(puzzle)
 print()
 
-print(sigmaKurang(puzzle))
+start = time.time()
+# Penghitungan dan Pencetakan nilai Kurang(i)
+for i in range(1, 17):
+    print("Kurang(" + str(i) + ") = " + str(Kurang(puzzle, i)))
 
-if(puzzleCanBeSolve(puzzle)):
+totalValue = sigmaKurang(puzzle) + posisiSelKosong(puzzle)
+print("\nSigmaKurang + X = " + str(totalValue))
+
+if(puzzleCanBeSolve(puzzle, totalValue)):
     print("Puzzle bisa diselesaikan")
+
+    prioQueue = []
+    listSimpul = []
+    simpulChecked = 1
+    found = False
+    insert(prioQueue, listSimpul, 0, 0, 0, puzzle, 1, 0)
+    while(len(prioQueue) != 0 and not found):
+        simpul = delete(prioQueue)
+        # simpul struct:
+        # 1. prio
+        # 2. arah
+        # 3. depth
+        # 4. matrix
+        # 5. id
+        # 6. parentid
+        for i in range(4):
+            if((i+2) % 4 == simpul[1] and simpul[2] != 0):
+                continue
+            puzzleMove = pindahkanSlotKosong(simpul[3], i)
+            if(puzzleMove == simpul[3]):
+                continue
+            print(simpulChecked)
+            simpulChecked += 1
+            if(isGoal(puzzleMove)):
+                listSimpul.append((simpulChecked, simpul[4], puzzleMove))
+                prio = simpul[2]+1 + ubinSalahPosisi(puzzleMove)
+                deleteLowerPrio(prioQueue, prio)
+                found = True
+                break
+            else:
+                insert(prioQueue, listSimpul, simpul[2]+1+ubinSalahPosisi(
+                    puzzleMove), i, simpul[2]+1, puzzleMove, simpulChecked, simpul[4])
+    end = time.time()
+    idGoal = simpulChecked
+    iter = 1
+    listLangkah = findLangkah(listSimpul, idGoal)
+    for i in listLangkah:
+        print("Langkah ke-" + str(iter))
+        printPuzzle(i)
+        print()
+        iter += 1
+
+    print("Jumlah simpul yang dibangkitkan: " +
+          str(simpulChecked))
+    print(f"Runtime of the program is {end - start}")
 else:
     print("Puzzle tidak bisa diselesaikan")
-
-pindahkanSlotKosong(puzzle, 2)
-printPuzzle(puzzle)
-
-list = []
-insert(list, 4, "ASU")
-insert(list, 5, "KAMBINg")
-insert(list, 1, "ANJING")
-
-print(list[0][1])
+print()
