@@ -2,7 +2,7 @@ Puzzle:
    5   1   3   4
    9   2   7   8
    -   6  15  11
-  13  12  10  14
+  13  10  12  14
 Kurang(1) = 0
 Kurang(2) = 0
 Kurang(3) = 1
@@ -14,102 +14,10 @@ Kurang(8) = 1
 Kurang(9) = 4
 Kurang(10) = 0
 Kurang(11) = 1
-Kurang(12) = 1
+Kurang(12) = 0
 Kurang(13) = 2
 Kurang(14) = 0
 Kurang(15) = 5
 Kurang(16) = 7
-SigmaKurang + X = 28
-Puzzle Has Been Solved !!
-Time Execution: 0.12599945068359375 
-Nodes Raised: 3344 
-Langkah ke-1
-   5   1   3   4
-   -   2   7   8
-   9   6  15  11
-  13  12  10  14
-Langkah ke-2
-   -   1   3   4
-   5   2   7   8
-   9   6  15  11
-  13  12  10  14
-Langkah ke-3
-   1   -   3   4
-   5   2   7   8
-   9   6  15  11
-  13  12  10  14
-Langkah ke-4
-   1   2   3   4
-   5   -   7   8
-   9   6  15  11
-  13  12  10  14
-Langkah ke-5
-   1   2   3   4
-   5   6   7   8
-   9   -  15  11
-  13  12  10  14
-Langkah ke-6
-   1   2   3   4
-   5   6   7   8
-   9  12  15  11
-  13   -  10  14
-Langkah ke-7
-   1   2   3   4
-   5   6   7   8
-   9  12  15  11
-  13  10   -  14
-Langkah ke-8
-   1   2   3   4
-   5   6   7   8
-   9  12  15  11
-  13  10  14   -
-Langkah ke-9
-   1   2   3   4
-   5   6   7   8
-   9  12  15   -
-  13  10  14  11
-Langkah ke-10
-   1   2   3   4
-   5   6   7   8
-   9  12   -  15
-  13  10  14  11
-Langkah ke-11
-   1   2   3   4
-   5   6   7   8
-   9   -  12  15
-  13  10  14  11
-Langkah ke-12
-   1   2   3   4
-   5   6   7   8
-   9  10  12  15
-  13   -  14  11
-Langkah ke-13
-   1   2   3   4
-   5   6   7   8
-   9  10  12  15
-  13  14   -  11
-Langkah ke-14
-   1   2   3   4
-   5   6   7   8
-   9  10  12  15
-  13  14  11   -
-Langkah ke-15
-   1   2   3   4
-   5   6   7   8
-   9  10  12   -
-  13  14  11  15
-Langkah ke-16
-   1   2   3   4
-   5   6   7   8
-   9  10   -  12
-  13  14  11  15
-Langkah ke-17
-   1   2   3   4
-   5   6   7   8
-   9  10  11  12
-  13  14   -  15
-Langkah ke-18
-   1   2   3   4
-   5   6   7   8
-   9  10  11  12
-  13  14  15   -
+SigmaKurang + X = 27
+Puzzle Can't Be Solved :(

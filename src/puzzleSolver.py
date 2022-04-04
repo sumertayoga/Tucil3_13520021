@@ -1,5 +1,9 @@
 from copy import deepcopy
 
+# File ini berisi kumpulan fungsi
+# untuk menyelesaikan permasalahan
+# 15 Puzzle
+
 
 def fillPuzzleFromList(puzzle, list):
     iter = 0
@@ -102,28 +106,12 @@ def pindahkanSlotKosong(matriks, arah):
     return matrix
 
 
-def insert(list, listSimpul, prio, arah, kedalaman, matrix, id, idparent):
-    list.append((prio, arah, kedalaman, matrix, id, idparent))
-    listSimpul.append((id, idparent, matrix))
-    list.sort(key=lambda i: i[0])
-
-
-def delete(list):
-    return list.pop(0)
-
-
 def isGoal(matrix):
     for i in range(4):
         for j in range(4):
             if(matrix[i][j] != i*4+j+1):
                 return False
     return True
-
-
-def deleteLowerPrio(list, prio):
-    for i in list:
-        if (i[0] < prio):
-            list.remove(i)
 
 
 def findId(listSimpul, id):

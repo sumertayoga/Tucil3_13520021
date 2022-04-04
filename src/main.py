@@ -1,3 +1,4 @@
+import heapq
 import time
 from puzzleSolver import *
 import random
@@ -15,10 +16,9 @@ while(masukanTidakSesuai):
         outputFile = open("output.txt", "w")
         masukanTidakSesuai = False
     elif(pilihan == 2):
-        #fileName = input("\nMasukkan nama file: ")
-        file = open("tc5.txt", "r")
-        #outputName = input("Masukkan nama file output: ")
-        outputFile = open("output.txt", "w")
+        fileName = input("\nMasukkan nama file: ")
+        file = open("./test/" + fileName, "r")
+        outputFile = open("./test/output.txt", "w")
         for i in range(4):
             f = file.readline().split()
             for j in range(4):
@@ -53,9 +53,9 @@ if(puzzleCanBeSolve(puzzle, totalValue)):
     listSimpul = []
     simpulChecked = 1
     found = False
-    insert(prioQueue, listSimpul, 0, 0, 0, puzzle, 1, 0)
-    while(not found):
-        simpul = delete(prioQueue)
+    heapq.heappush(prioQueue, (0, 0, 0, puzzle, 1, 0))
+    while(len(prioQueue) != 0 and not found):
+        simpul = heapq.heappop(prioQueue)
         # simpul struct:
         # 1. prio
         # 2. arah
@@ -77,8 +77,9 @@ if(puzzleCanBeSolve(puzzle, totalValue)):
                 found = True
                 break
             else:
-                insert(prioQueue, listSimpul, simpul[2]+1+ubinSalahPosisi(
-                    puzzleMove), i, simpul[2]+1, puzzleMove, simpulChecked, simpul[4])
+                heapq.heappush(prioQueue, (simpul[2]+1+ubinSalahPosisi(
+                    puzzleMove), i, simpul[2]+1, puzzleMove, simpulChecked, simpul[4]))
+                listSimpul.append((simpulChecked, simpul[4], puzzleMove))
     end = time.time()
     idGoal = simpulChecked
     iter = 1
