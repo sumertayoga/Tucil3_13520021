@@ -1,14 +1,25 @@
 from copy import deepcopy
 
 
-def printPuzzle(matrix):
+def fillPuzzleFromList(puzzle, list):
+    iter = 0
+    for i in range(4):
+        for j in range(4):
+            puzzle[i][j] = list[iter]
+            iter += 1
+
+
+def printPuzzle(matrix, file):
     for i in range(4):
         for j in range(4):
             if(matrix[i][j] == 16):
                 print("   -", end=" ")
+                file.write("   -")
             else:
                 print('{:4}'.format(matrix[i][j]), end=" ")
+                file.write('{:4}'.format(matrix[i][j]))
         print()
+        file.write("\n")
 
 
 def posisiKurang(matrix, bilPertama, bilKedua):
