@@ -15,5 +15,12 @@ Berikut cara menggunakan program dengan GUI:
 
 NB: saat proses pencarian solusi, jika langkah yang diperlukan cukup banyak (> 20 langkah) proses pencarian akan agak lama (bisa bermenit-menit) sehingga ditunggu saja. 
 
+Berikut cara menggunakan program dengan CommandLine:
+1. Run main.py
+2. Pilih ingin puzzle dirandom atau dengan menggunakan file yang telah dibuat
+3. Jika memilih random, program akan langsung berjalan
+4. Jika memilih masukan file, akan diminta nama file pada folder test
+5. Program akan mencari solusi penyelesaian 15 Puzzle
+
 ## Author
 Gede Sumerta Yoga (13520021)
