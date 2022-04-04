@@ -31,7 +31,7 @@ def startSolver():
     sigmaKurangLabel.place(x=300, y=190)
     outputFile.write("SigmaKurang + X = " + str(totalValue) + "\n")
 
-    if(puzzleCanBeSolve(puzzle, totalValue)):
+    if(puzzleCanBeSolve(totalValue)):
         prioQueue = []
         listSimpul = []
         simpulChecked = 1

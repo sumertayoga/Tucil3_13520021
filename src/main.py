@@ -17,8 +17,8 @@ while(masukanTidakSesuai):
         masukanTidakSesuai = False
     elif(pilihan == 2):
         fileName = input("\nMasukkan nama file: ")
-        file = open("./test/" + fileName, "r")
-        outputFile = open("./test/output.txt", "w")
+        file = open("../test/" + fileName, "r")
+        outputFile = open("../test/output.txt", "w")
         for i in range(4):
             f = file.readline().split()
             for j in range(4):
@@ -45,7 +45,7 @@ totalValue = sigmaKurang(puzzle) + posisiSelKosong(puzzle)
 print("\nSigmaKurang + X = " + str(totalValue))
 outputFile.write("\nSigmaKurang + X = " + str(totalValue) + "\n")
 
-if(puzzleCanBeSolve(puzzle, totalValue)):
+if(puzzleCanBeSolve(totalValue)):
     print("Puzzle bisa diselesaikan")
     outputFile.write("Puzzle bisa diselesaikan\n")
 

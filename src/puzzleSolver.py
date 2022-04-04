@@ -68,7 +68,7 @@ def sigmaKurang(matrix):
     return count
 
 
-def puzzleCanBeSolve(matrix, total):
+def puzzleCanBeSolve(total):
     return total % 2 == 0
 
 

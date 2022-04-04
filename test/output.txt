@@ -3,6 +3,7 @@ Puzzle:
    9   2   7   8
    -   6  15  11
   13  10  12  14
+
 Kurang(1) = 0
 Kurang(2) = 0
 Kurang(3) = 1
@@ -19,5 +20,6 @@ Kurang(13) = 2
 Kurang(14) = 0
 Kurang(15) = 5
 Kurang(16) = 7
+
 SigmaKurang + X = 27
-Puzzle Can't Be Solved :(
+Puzzle tidak bisa diselesaikan 
